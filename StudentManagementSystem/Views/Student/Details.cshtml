@@ -1,0 +1,33 @@
+﻿@model StudentManagementSystem.Models.ViewModels.Students.DetailsStudentViewModel
+
+<h2>Student Details</h2>
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title">
+            @Model.FullName
+        </h4>
+
+        <p>
+            <strong>Email:</strong>
+            @Model.Email
+        </p>
+
+        <p>
+            <strong>Phone Number:</strong>
+            @Model.PhoneNumber
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            @Model.Status
+        </p>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
+</div>
