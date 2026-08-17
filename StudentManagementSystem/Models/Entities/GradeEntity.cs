@@ -1,8 +1,8 @@
 ﻿namespace StudentManagementSystem.Models.Entities;
 
-public class Grades:BaseEntity
+public class GradeEntity:BaseEntity
 {
     public decimal Score { get; set; }
     public int StudentCourseId { get; set; }
-    public StudentCourse studentCourse { get; set; } = null!;
+    public StudentCourseEntity studentCourse { get; set; } = null!;
 }

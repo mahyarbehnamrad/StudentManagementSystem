@@ -9,24 +9,24 @@ public class ApplicationDbContext:DbContext
     {
     }
 
-    public DbSet<Student> Students { get; set; }
-    public DbSet<Course> Courses { get; set; }
-    public DbSet<StudentCourse> studentCourses { get; set; }
-    public DbSet<Grades> grades { get; set; }
+    public DbSet<StudentEntity> Students { get; set; }
+    public DbSet<CourseEntity> Courses { get; set; }
+    public DbSet<StudentCourseEntity> studentCourses { get; set; }
+    public DbSet<GradeEntity> grades { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<StudentCourse>()
+        modelBuilder.Entity<StudentCourseEntity>()
             .HasIndex(sc => new { sc.StudentId, sc.CourseId })
             .IsUnique();
-        modelBuilder.Entity<Course>()
+        modelBuilder.Entity<CourseEntity>()
             .HasQueryFilter(x => !x.IsDeleted);
-        modelBuilder.Entity<StudentCourse>()
+        modelBuilder.Entity<StudentCourseEntity>()
             .HasQueryFilter(x=>!x.IsDeleted);
-        modelBuilder.Entity<Student>()
+        modelBuilder.Entity<StudentEntity>()
             .HasQueryFilter(x => !x.IsDeleted);
-        modelBuilder.Entity<Grades>()
+        modelBuilder.Entity<GradeEntity>()
             .HasQueryFilter(x => !x.IsDeleted);
     }
 }

@@ -20,7 +20,7 @@ public class StudentService : IStudentService
     }
     public async Task CreateAsync(CreateStudentViewModel model)
     {
-        var student = _mapper.Map<Student>(model);
+        var student = _mapper.Map<StudentEntity>(model);
         student.CreatedAt = DateTime.UtcNow;
         _contex.Students.Add(student);
         await _contex.SaveChangesAsync();
@@ -42,12 +42,12 @@ public class StudentService : IStudentService
         return await _contex.Students.AsNoTracking().ProjectTo<ListStudentViewModel>(_mapper.ConfigurationProvider).ToListAsync();
     }
 
-    public async Task<DetailsStudentViewModel?> GetByIdAsync(int id)
+    public async Task<DetailStudentViewModel?> GetByIdAsync(int id)
     {
         return await _contex.Students
             .AsNoTracking()
             .Where(s => s.Id == id)
-            .ProjectTo<DetailsStudentViewModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            .ProjectTo<DetailStudentViewModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
     }
 
     public async Task<DeleteStudentViewModel?> GetForSoftDeleteAsync(int id)

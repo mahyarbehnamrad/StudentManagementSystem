@@ -1,0 +1,31 @@
+﻿@model StudentManagementSystem.Models.ViewModels.Courses.DetailCourseViewModel
+
+<h2>Course Details</h2>
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title">
+            @Model.Name
+        </h4>
+
+        <hr />
+
+        <p>
+            <strong>Max Grade:</strong>
+            @Model.MaxGrade
+        </p>
+
+        <a asp-action="Edit"
+           asp-route-id="@Model.Id"
+           class="btn btn-warning">
+            Edit
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
+</div>

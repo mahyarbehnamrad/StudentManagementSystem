@@ -2,7 +2,7 @@
 
 namespace StudentManagementSystem.Models.ViewModels.Students;
 
-public class DetailsStudentViewModel
+public class DetailStudentViewModel
 {
     public int Id { get; set; }
 

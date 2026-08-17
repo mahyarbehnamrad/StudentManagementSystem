@@ -2,7 +2,7 @@
 
 namespace StudentManagementSystem.Models.Entities;
 
-public class Student:BaseEntity
+public class StudentEntity:BaseEntity
 {
     public  string Name { get; set; }
     public string Email { get; set; }
@@ -13,6 +13,6 @@ public class Student:BaseEntity
     public StudentStatus Status { get; set; }
     
     //Navigations
-    public ICollection<StudentCourse> studentCourses { get; set; } = new List<StudentCourse>();
+    public ICollection<StudentCourseEntity> studentCourses { get; set; } = new List<StudentCourseEntity>();
 
 }

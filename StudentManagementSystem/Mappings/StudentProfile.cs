@@ -8,17 +8,17 @@ public class StudentProfile : Profile
 {
     public StudentProfile()
     {
-        CreateMap<CreateStudentViewModel, Student>();
-        CreateProjection<Student, ListStudentViewModel>()
+        CreateMap<CreateStudentViewModel, StudentEntity>();
+        CreateProjection<StudentEntity, ListStudentViewModel>()
             .ForMember(
             dest => dest.FullName,
             opt => opt.MapFrom(src => src.Name + " " + src.Family));
-        CreateProjection<Student, DetailsStudentViewModel>()
+        CreateProjection<StudentEntity, DetailStudentViewModel>()
             .ForMember(
             dest => dest.FullName,
             opt => opt.MapFrom(src => src.Name + " " + src.Family));
-        CreateMap<EditStudentViewModel, Student>().ReverseMap();
-        CreateProjection<Student, DeleteStudentViewModel>()
+        CreateMap<EditStudentViewModel, StudentEntity>().ReverseMap();
+        CreateProjection<StudentEntity, DeleteStudentViewModel>()
             .ForMember(
             dest => dest.FullName,
             opt => opt.MapFrom(src => src.Name + " " + src.Family));
