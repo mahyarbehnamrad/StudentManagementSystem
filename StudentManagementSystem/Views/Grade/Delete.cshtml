@@ -1,0 +1,50 @@
+﻿@model StudentManagementSystem.Models.ViewModels.Grades.DeleteGradeViewModel
+
+@{
+    ViewData["Title"] = "Delete Grade";
+}
+<div class="content-narrow">
+<h2>Delete Grade</h2>
+
+<div class="alert alert-danger">
+    Are you sure you want to delete this grade?
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+
+        <p>
+            <strong>Student:</strong>
+            @Model.StudentName
+        </p>
+
+        <p>
+            <strong>Course:</strong>
+            @Model.CourseName
+        </p>
+
+        <p>
+            <strong>Score:</strong>
+            @Model.Score
+        </p>
+
+    </div>
+</div>
+
+<form asp-action="DeleteConfirmed"
+      method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Delete
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
+</div>

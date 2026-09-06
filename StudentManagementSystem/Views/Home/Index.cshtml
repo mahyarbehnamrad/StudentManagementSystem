@@ -11,6 +11,7 @@
 
 <div class="row g-4">
 
+
     <!-- Students -->
     <div class="col-md-6">
         <div class="card shadow-sm h-100">
@@ -58,4 +59,49 @@
         </div>
     </div>
 
+    <!-- Enrollments -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h3 class="card-title">
+                    Enrollments
+                </h3>
+
+                <p class="card-text text-muted">
+                    Enroll students in courses and manage enrollments.
+                </p>
+
+                <a asp-controller="StudentCourse"
+                   asp-action="Index"
+                   class="btn btn-dark">
+                    Manage Enrollments
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Grades -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h3 class="card-title">
+                    Grades
+                </h3>
+
+                <p class="card-text text-muted">
+                    Manage student grades and course results.
+                </p>
+
+                <a asp-controller="Grade"
+                   asp-action="Index"
+                   class="btn btn-warning">
+                    Manage Grades
+                </a>
+
+            </div>
+        </div>
+    </div>
 </div>

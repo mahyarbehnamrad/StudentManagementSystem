@@ -1,5 +1,5 @@
 ﻿@model StudentManagementSystem.Models.ViewModels.Courses.EditCourseViewModel
-
+<div class="content-narrow">
 <h2>Edit Course</h2>
 
 <form asp-action="Edit" method="post">
@@ -54,3 +54,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+</div>

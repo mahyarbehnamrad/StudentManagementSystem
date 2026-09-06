@@ -28,6 +28,7 @@ public class StudentController : Controller
         if (ModelState.IsValid) 
         {
             await _studentService.CreateAsync(viewModel);
+            TempData["SuccessMessage"] = "Student was created successfully.";
             return RedirectToAction(nameof(Index));
         }
         return View(viewModel);
@@ -53,6 +54,7 @@ public class StudentController : Controller
         if (!ModelState.IsValid) return View(viewModel);
         var update = await _studentService.UpdateAsync(viewModel);
         if(!update) return NotFound();
+        TempData["SuccessMessage"] = "Student was updated successfully.";
         return RedirectToAction(nameof(Index));
     }
     [HttpGet]
@@ -68,6 +70,7 @@ public class StudentController : Controller
     {
         var deleted = await _studentService.SoftDeleteAsync(id);
         if (!deleted) return NotFound();
+        TempData["SuccessMessage"] = "Student was deleted successfully.";
         return RedirectToAction(nameof(Index));
     }
 }

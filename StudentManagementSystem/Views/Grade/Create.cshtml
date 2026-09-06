@@ -1,42 +1,55 @@
-﻿@model StudentManagementSystem.Models.ViewModels.Courses.CreateCourseViewModel
+﻿@model StudentManagementSystem.Models.ViewModels.Grades.CreateGradeViewModel
+
+@{
+    ViewData["Title"] = "Add Grade";
+}
 <div class="content-narrow">
-<h2>Create Course</h2>
+<h2>Add Grade</h2>
 
 <form asp-action="Create" method="post">
 
     <div asp-validation-summary="ModelOnly"
-         class="text-danger">
+         class="text-danger mb-3">
     </div>
 
     <div class="mb-3">
-        <label asp-for="Name"
+        <label asp-for="StudentCourseId"
                class="form-label">
+            Student / Course
         </label>
 
-        <input asp-for="Name"
-               class="form-control" />
+        <select asp-for="StudentCourseId"
+                asp-items="Model.Enrollments"
+                class="form-select">
 
-        <span asp-validation-for="Name"
+            <option value="0">
+                -- Select Enrollment --
+            </option>
+
+        </select>
+
+        <span asp-validation-for="StudentCourseId"
               class="text-danger">
         </span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="MaxGrade"
+        <label asp-for="Score"
                class="form-label">
+            Score
         </label>
 
-        <input asp-for="MaxGrade"
+        <input asp-for="Score"
                class="form-control" />
 
-        <span asp-validation-for="MaxGrade"
+        <span asp-validation-for="Score"
               class="text-danger">
         </span>
     </div>
 
     <button type="submit"
             class="btn btn-primary">
-        Create
+        Save
     </button>
 
     <a asp-action="Index"

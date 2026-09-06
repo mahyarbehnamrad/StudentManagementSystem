@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentController =
+        ViewContext.RouteData.Values["controller"]?.ToString();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,27 +14,125 @@
     <link rel="stylesheet" href="~/StudentManagementSystem.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StudentManagementSystem</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+    <div class="app-layout">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 9.75L5.15 9 12 5.25 18.85 9 12 12.75z" />
+                    </svg>
                 </div>
+
+                <span class="sidebar-title">
+                    Student Management
+                </span>
             </div>
-        </nav>
-    </header>
+
+            <nav class="sidebar-nav">
+
+                <a asp-controller="Home" asp-action="Index">
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 11L12 3l9 8v10h-6v-6H9v6H3V11z" />
+                        </svg>
+                    </span>
+                    <span class="menu-text">Home</span>
+                </a>
+
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   class="@(currentController == "Student" ? "active" : "")">
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-4.42 0-8 2.24-8 5v3h16v-3c0-2.76-3.58-5-8-5z" />
+                        </svg>
+                    </span>
+                    <span class="menu-text">Students</span>
+                </a>
+
+                <a asp-controller="Course"
+                   asp-action="Index"
+                   class="@(currentController == "Course" ? "active" : "")">
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 4h16v16H4V4zm3 3v2h10V7H7zm0 4v2h10v-2H7zm0 4v2h7v-2H7z" />
+                        </svg>
+                    </span>
+                    <span class="menu-text">Courses</span>
+                </a>
+
+                <a asp-controller="StudentCourse"
+                   asp-action="Index"
+                   class="@(currentController == "StudentCourse" ? "active" : "")">
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12 3.41 13.41 9 19 21 7 19.59 5.59 9 16.17z" />
+                        </svg>
+                    </span>
+                    <span class="menu-text">Enrollments</span>
+                </a>
+
+                <a asp-controller="Grade"
+                   asp-action="Index"
+                   class="@(currentController == "Grade" ? "active" : "")">
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" />
+                        </svg>
+                    </span>
+                    <span class="menu-text">Grades</span>
+                </a>
+
+                <div class="sidebar-divider"></div>
+
+                <a asp-controller="Home" asp-action="Privacy">
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                        </svg>
+                    </span>
+                    <span class="menu-text">Privacy</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <div class="main-content">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show success-alert"
+                     role="alert">
+
+                    <strong>Success!</strong>
+                    @TempData["SuccessMessage"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            }
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+    </div>
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="~/js/site.js"
+                asp-append-version="true">
+        </script>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -39,7 +141,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - StudentManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - Student Management System
+            |
+            <a asp-controller="Home"
+               asp-action="Privacy">
+                Privacy
+            </a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

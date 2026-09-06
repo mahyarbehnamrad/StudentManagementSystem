@@ -1,7 +1,7 @@
 ﻿@model StudentManagementSystem.Models.ViewModels.Students.CreateStudentViewModel
 
 @using StudentManagementSystem.Models.Enums
-
+<div class="content-narrow">
 <h2>Create Student</h2>
 
 <form asp-action="Create" method="post">
@@ -61,3 +61,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+</div>

@@ -28,6 +28,7 @@ public class CourseController : Controller
         if(ModelState.IsValid) 
         {
             await _service.CreateAsync(viewModel);
+            TempData["SuccessMessage"] = "Course was created successfully.";
             return RedirectToAction(nameof(Index));
         }
         return View(viewModel);
@@ -52,6 +53,7 @@ public class CourseController : Controller
     {
         var deleted = await _service.SoftDeleteAsync(id);
         if (!deleted) return NotFound();
+        TempData["SuccessMessage"] = "Course was deleted successfully.";
         return RedirectToAction(nameof(Index));
     }
     [HttpGet]
@@ -63,11 +65,15 @@ public class CourseController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(EditCourseViewModel viewModel) 
+    public async Task<IActionResult> Edit(EditCourseViewModel viewModel)
     {
         if (!ModelState.IsValid) return View(viewModel);
         var update = await _service.UpdateAsync(viewModel);
-        if (update) return RedirectToAction(nameof(Index));
+        if (update) 
+        {
+            TempData["SuccessMessage"] = "Course was updated successfully.";
+            return RedirectToAction(nameof(Index));
+        } 
         return NotFound();
     }
 }
