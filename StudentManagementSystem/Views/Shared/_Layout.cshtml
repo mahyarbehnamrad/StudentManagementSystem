@@ -97,6 +97,18 @@
                     <span class="menu-text">Privacy</span>
                 </a>
 
+                <a asp-controller="RecycleBin"
+                   asp-action="Index"
+                   class="@(currentController == "RecycleBin" ? "active" : "")">
+
+                    <span class="menu-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M6 7h12l-1 14H7L6 7zm3-4h6l1 2h4v2H4V5h4l1-2z" />
+                        </svg>
+                    </span>
+
+                    <span class="menu-text">Recycle Bin</span>
+                </a>
             </nav>
 
         </aside>

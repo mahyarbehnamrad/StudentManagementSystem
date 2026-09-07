@@ -312,3 +312,45 @@ body {
     background-color: #198754;
     color: white;
 }
+
+.recycle-page {
+    width: 100%;
+    max-width: 1050px;
+    margin: 45px auto;
+}
+
+.recycle-header {
+    margin-bottom: 25px;
+}
+
+    .recycle-header h2 {
+        color: #2f4057;
+        font-weight: 650;
+    }
+
+.recycle-card {
+    background-color: #ffffff;
+    border: 1px solid #d8dee8;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+    .recycle-card h4 {
+        color: #354861;
+        margin-bottom: 20px;
+    }
+
+    .recycle-card table {
+        margin-bottom: 0;
+    }
+
+.empty-recycle {
+    margin: 0;
+    padding: 18px;
+    text-align: center;
+    color: #7a8798;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+}

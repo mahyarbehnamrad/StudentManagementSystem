@@ -1,0 +1,265 @@
+﻿@model StudentManagementSystem.Models.ViewModels.RecycleBin.RecycleBinViewModel
+
+@{
+    ViewData["Title"] = "Recycle Bin";
+}
+
+<div class="recycle-page">
+
+    <div class="recycle-header">
+        <div>
+            <h2>Recycle Bin</h2>
+            <p class="text-muted">
+                Restore previously deleted records.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Students -->
+    <div class="recycle-card">
+
+        <h4>Deleted Students</h4>
+
+        @if (Model.Students.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Deleted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Students)
+                        {
+                            <tr>
+                                <td>@item.FullName</td>
+
+                                <td>
+                                    @item.DeletedAt?.ToString("yyyy-MM-dd HH:mm")
+                                </td>
+
+                                <td>
+                                    <form asp-action="RestoreStudent"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-outline-success btn-sm">
+                                            Restore
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <p class="empty-recycle">
+                No deleted students.
+            </p>
+        }
+
+    </div>
+
+
+    <!-- Courses -->
+    <div class="recycle-card">
+
+        <h4>Deleted Courses</h4>
+
+        @if (Model.Courses.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Deleted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Courses)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+
+                                <td>
+                                    @item.DeletedAt?.ToString("yyyy-MM-dd HH:mm")
+                                </td>
+
+                                <td>
+                                    <form asp-action="RestoreCourse"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-outline-success btn-sm">
+                                            Restore
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <p class="empty-recycle">
+                No deleted courses.
+            </p>
+        }
+
+    </div>
+
+
+    <!-- Enrollments -->
+    <div class="recycle-card">
+
+        <h4>Deleted Enrollments</h4>
+
+        @if (Model.StudentCourses.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>Deleted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.StudentCourses)
+                        {
+                            <tr>
+                                <td>@item.StudentName</td>
+                                <td>@item.CourseName</td>
+
+                                <td>
+                                    @item.DeletedAt?.ToString("yyyy-MM-dd HH:mm")
+                                </td>
+
+                                <td>
+                                    <form asp-controller="RecycleBin"
+                                          asp-action="RestoreStudentCourse"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-outline-success btn-sm">
+                                            Restore
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <p class="empty-recycle">
+                No deleted enrollments.
+            </p>
+        }
+
+    </div>
+
+
+    <!-- Grades -->
+    <div class="recycle-card">
+
+        <h4>Deleted Grades</h4>
+
+        @if (Model.Grades.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>Score</th>
+                            <th>Deleted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Grades)
+                        {
+                            <tr>
+                                <td>@item.StudentName</td>
+                                <td>@item.CourseName</td>
+                                <td>@item.Score</td>
+
+                                <td>
+                                    @item.DeletedAt?.ToString("yyyy-MM-dd HH:mm")
+                                </td>
+
+                                <td>
+                                    <form asp-action="RestoreGrade"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-outline-success btn-sm">
+                                            Restore
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <p class="empty-recycle">
+                No deleted grades.
+            </p>
+        }
+
+    </div>
+
+</div>
