@@ -56,7 +56,7 @@ html {
    ============================== */
 
 :root {
-    --sidebar-width: 240px;
+    --sidebar-width: 280px;
     --sidebar-collapsed-width: 76px;
 }
 
@@ -539,4 +539,80 @@ body {
     grid-template-columns: 2fr 1fr auto auto;
     gap: 10px;
     margin-bottom: 22px;
+}
+
+/* ==============================
+   Error Page
+   ============================== */
+
+.error-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #d8dee8;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.error-code {
+    margin-bottom: 10px;
+    color: #3567a8;
+    font-size: 72px;
+    font-weight: 700;
+}
+
+.error-card h2 {
+    margin-bottom: 12px;
+    color: #2f4057;
+}
+
+.error-card p {
+    margin-bottom: 25px;
+    color: #7a8798;
+}
+.error-request-id {
+    margin-bottom: 25px;
+    color: #8b98a8;
+    font-size: 13px;
+}
+
+.error-request-id code {
+    color: #53657d;
+}
+/* ==============================
+   Empty State
+   ============================== */
+
+.empty-state {
+    padding: 55px 25px;
+    text-align: center;
+    background-color: #f9fbfd;
+    border: 1px dashed #ccd6e2;
+    border-radius: 12px;
+}
+
+.empty-state-icon {
+    margin-bottom: 15px;
+    color: #7890ad;
+    font-size: 42px;
+}
+
+.empty-state h4 {
+    margin-bottom: 8px;
+    color: #354861;
+    font-weight: 600;
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+    color: #8a97a7;
 }

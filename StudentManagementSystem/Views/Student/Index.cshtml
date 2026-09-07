@@ -38,56 +38,96 @@
     Add Student
 </a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Full Name</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var student in Model.Students)
+        @if (Model.Students.Any())
         {
-            <tr>
-                <td>@student.FullName</td>
-                @{
-                    var statusClass = student.Status switch
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var student in Model.Students)
                     {
-                        StudentStatus.Active => "bg-success",
-                        StudentStatus.Inactive => "bg-danger",
-                        StudentStatus.Graduated => "bg-primary",
-                        _ => "bg-secondary"
-                    };
+                        <tr>
+                            <td>@student.FullName</td>
+
+                            @{
+                                var statusClass = student.Status switch
+                                {
+                                    StudentStatus.Active => "bg-success",
+                                    StudentStatus.Inactive => "bg-danger",
+                                    StudentStatus.Graduated => "bg-primary",
+                                    _ => "bg-secondary"
+                                };
+                            }
+
+                            <td>
+                                <span class="badge @statusClass">
+                                    @student.Status
+                                </span>
+                            </td>
+
+                            <td>
+                                <a asp-action="Details"
+                                   asp-route-id="@student.Id"
+                                   class="btn btn-info btn-sm">
+                                    Details
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@student.Id"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@student.Id"
+                                   class="btn btn-danger btn-sm">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="empty-state">
+
+                @if (!string.IsNullOrWhiteSpace(Model.SearchTerm) ||
+                            Model.Status.HasValue)
+                {
+                    <h4>No students found</h4>
+
+                    <p>
+                        Try changing your search term or selected status.
+                    </p>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Clear Filters
+                    </a>
+                }
+                else
+                {
+                    <h4>No students yet</h4>
+
+                    <p>
+                        Add your first student to get started.
+                    </p>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary">
+                        + Add Student
+                    </a>
                 }
 
-                <td>
-                    <span class="badge @statusClass">
-                        @student.Status
-                    </span>
-                </td>
-                <td>
-                    <a asp-action="Details"
-                       asp-route-id="@student.Id"
-                       class="btn btn-info btn-sm">
-                        Details
-                    </a>
-
-                    <a asp-action="Edit"
-                       asp-route-id="@student.Id"
-                       class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
-                    <a asp-action="Delete"
-                       asp-route-id="@student.Id"
-                       class="btn btn-danger btn-sm">
-                        Delete
-                    </a>
-                </td>
-            </tr>
+            </div>
         }
-    </tbody>
-</table>
 </div>
 </div>

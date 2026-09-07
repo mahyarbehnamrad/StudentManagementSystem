@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Error";
+
+    var statusCode = ViewBag.StatusCode;
+    var message = ViewBag.ErrorMessage;
+}
+
+<div class="error-page">
+
+    <div class="error-card">
+
+        <div class="error-code">
+            @statusCode
+        </div>
+
+        <h2>Something went wrong</h2>
+
+        <p>
+            @message
+        </p>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-primary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
