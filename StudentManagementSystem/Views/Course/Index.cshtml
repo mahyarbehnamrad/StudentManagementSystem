@@ -1,6 +1,25 @@
-﻿@model List<StudentManagementSystem.Models.ViewModels.Courses.ListCourseViewModel>
+﻿@model StudentManagementSystem.Models.ViewModels.Courses.CourseIndexViewModel
 
 <div class="content-medium">
+    <form method="get"
+          asp-action="Index"
+          class="course-filter">
+
+        <input asp-for="SearchTerm"
+               class="form-control"
+               placeholder="Search course..." />
+
+        <button type="submit"
+                class="btn btn-primary">
+            Search
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Clear
+        </a>
+
+    </form>
 <div class="table-card">
     <h2>Courses</h2>
 
@@ -18,7 +37,7 @@
     </thead>
 
     <tbody>
-        @foreach (var course in Model)
+        @foreach (var course in Model.Courses)
         {
             <tr>
                 <td>@course.Name</td>

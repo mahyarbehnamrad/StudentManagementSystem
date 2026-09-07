@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.Mappings;
 using StudentManagementSystem.Models.Data;
 using StudentManagementSystem.Models.Entities;
+using StudentManagementSystem.Models.Enums;
 using StudentManagementSystem.Models.ViewModels.Students;
 using StudentManagementSystem.Services.Interface;
 
@@ -35,11 +36,6 @@ public class StudentService : IStudentService
         student.UpdatedAt = DateTime.UtcNow;
         await _contex.SaveChangesAsync();
         return true;
-    }
-
-    public async Task<List<ListStudentViewModel>> GetAllAsync()
-    {
-        return await _contex.Students.AsNoTracking().ProjectTo<ListStudentViewModel>(_mapper.ConfigurationProvider).ToListAsync();
     }
 
     public async Task<DetailStudentViewModel?> GetByIdAsync(int id)
@@ -75,4 +71,27 @@ public class StudentService : IStudentService
         await _contex.SaveChangesAsync();
         return true;
     }
+
+    public async Task<List<ListStudentViewModel>> GetAllAsync(string? searchTerm, StudentStatus? status)
+    {
+            var query = _contex.Students
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(s => s.Name.Contains(searchTerm) || s.Family.Contains(searchTerm) || (s.Name + " " + s.Family).Contains(searchTerm));
+            }
+
+            if (status.HasValue)
+            {
+                query = query.Where(s => s.Status == status.Value);
+            }
+
+            return await query
+                .OrderBy(s => s.Name)
+                .ProjectTo<ListStudentViewModel>(
+                    _mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
 }

@@ -28,6 +28,18 @@ html {
     .dashboard-charts {
         grid-template-columns: 1fr;
     }
+    .student-filter {
+        grid-template-columns: 1fr;
+    }
+    .course-filter {
+        grid-template-columns: 1fr;
+    }
+    .student-course-filter {
+        grid-template-columns: 1fr;
+    }
+    .grade-filter {
+        grid-template-columns: 1fr;
+    }
 }
 
 .btn:focus,
@@ -502,4 +514,29 @@ body {
     border-top: 1px solid #d8dee8;
     color: #6c757d;
     font-size: 14px;
+}
+
+.student-filter {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto auto;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.course-filter {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.student-course-filter {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.grade-filter {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto auto;
+    gap: 10px;
+    margin-bottom: 22px;
 }

@@ -1,6 +1,36 @@
 ﻿@using StudentManagementSystem.Models.Enums
-@model List<StudentManagementSystem.Models.ViewModels.Students.ListStudentViewModel>
+@model StudentManagementSystem.Models.ViewModels.Students.StudentIndexViewModel
+
 <div class="content-medium">
+    <form method="get"
+      asp-action="Index"
+      class="student-filter">
+
+    <input asp-for="SearchTerm"
+           class="form-control"
+           placeholder="Search by student name..." />
+
+    <select asp-for="Status"
+            asp-items="Html.GetEnumSelectList<StudentStatus>()"
+            class="form-select">
+
+        <option value="">
+            All Statuses
+        </option>
+
+    </select>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Search
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        Clear
+    </a>
+
+</form>
 <div class="table-card">
 <h2>Students</h2>
 
@@ -18,7 +48,7 @@
     </thead>
 
     <tbody>
-        @foreach (var student in Model)
+        @foreach (var student in Model.Students)
         {
             <tr>
                 <td>@student.FullName</td>

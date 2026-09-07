@@ -12,10 +12,21 @@ public class GradeController : Controller
         _service = service;
     }
 
-    public async Task<IActionResult> Index() 
+    public async Task<IActionResult> Index(string? searchTerm, int? courseId)
     {
-        var grades = await _service.GetAllAsync();
-        return View(grades);
+        var grades = await _service.GetAllAsync(searchTerm, courseId);
+
+        var courses = await _service.GetCourseOptionsAsync();
+
+        var viewModel = new GradeIndexViewModel
+        {
+            Grades = grades,
+            Courses = courses,
+            SearchTerm = searchTerm,
+            CourseId = courseId
+        };
+
+        return View(viewModel);
     }
     [HttpGet]
     public async Task<IActionResult> Create() 

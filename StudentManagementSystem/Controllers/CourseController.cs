@@ -11,10 +11,17 @@ public class CourseController : Controller
     {
         _service = service;
     }
-    public async Task<IActionResult> Index() 
+    public async Task<IActionResult> Index(string? searchTerm)
     {
-        var courses = await _service.GetAllAsync();
-        return View(courses);
+        var courses = await _service.GetAllAsync(searchTerm);
+
+        var viewModel = new CourseIndexViewModel
+        {
+            Courses = courses,
+            SearchTerm = searchTerm
+        };
+
+        return View(viewModel);
     }
     [HttpGet]
     public async Task<IActionResult> Create() 

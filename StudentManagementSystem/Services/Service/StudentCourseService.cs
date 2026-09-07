@@ -55,11 +55,25 @@ public class StudentCourseService : IStudentCourseService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<ListStudentCourseViewModel>> GetAllAsync()
+    public async Task<List<ListStudentCourseViewModel>> GetAllAsync(
+        string? searchTerm)
     {
-        return await _dbContext.studentCourses
+        var query = _dbContext.studentCourses
             .AsNoTracking()
-            .OrderBy(c => c.Student.Name)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            searchTerm = searchTerm.Trim();
+
+            query = query.Where(sc => sc.Student.Name.Contains(searchTerm) ||
+                sc.Student.Family.Contains(searchTerm) ||
+                (sc.Student.Name + " " + sc.Student.Family).Contains(searchTerm) ||
+                sc.Course.Name.Contains(searchTerm));
+        }
+
+        return await query
+            .OrderBy(sc => sc.Student.Name)
             .ProjectTo<ListStudentCourseViewModel>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }

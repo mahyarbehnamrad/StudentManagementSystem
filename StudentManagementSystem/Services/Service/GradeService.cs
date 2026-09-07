@@ -45,9 +45,47 @@ public class GradeService : IGradeService
 
     }
 
-    public async Task<List<ListGradeViewModel>> GetAllAsync()
+    public async Task<List<ListGradeViewModel>> GetAllAsync(string? searchTerm, int? courseId)
     {
-        return await _context.grades.AsNoTracking().ProjectTo<ListGradeViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        var query = _context.grades
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            searchTerm = searchTerm.Trim();
+
+            query = query.Where(g =>
+                g.studentCourse.Student.Name.Contains(searchTerm) ||
+                g.studentCourse.Student.Family.Contains(searchTerm) ||
+                (g.studentCourse.Student.Name + " " +
+                 g.studentCourse.Student.Family)
+                    .Contains(searchTerm));
+        }
+
+        if (courseId.HasValue)
+        {
+            query = query.Where(g =>
+                g.studentCourse.CourseId == courseId.Value);
+        }
+
+        return await query
+            .OrderBy(g => g.studentCourse.Student.Name)
+            .ProjectTo<ListGradeViewModel>(
+                _mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+    public async Task<List<SelectListItem>> GetCourseOptionsAsync()
+    {
+        return await _context.Courses
+            .AsNoTracking()
+            .OrderBy(c => c.Name)
+            .Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            })
+            .ToListAsync();
     }
 
     public async Task<CreateGradeViewModel> GetForCreateModelAsync()

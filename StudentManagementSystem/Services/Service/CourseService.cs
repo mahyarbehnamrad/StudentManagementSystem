@@ -65,9 +65,23 @@ public class CourseService : ICourseService
         return true;
     }
 
-    public async Task<List<ListCourseViewModel>> GetAllAsync()
+    public async Task<List<ListCourseViewModel>> GetAllAsync(string? searchTerm)
     {
-        return await _dbContext.Courses.AsNoTracking().ProjectTo<ListCourseViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        var query = _dbContext.Courses
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            searchTerm = searchTerm.Trim();
+
+            query = query.Where(c => c.Name.Contains(searchTerm));
+        }
+
+        return await query
+            .OrderBy(c => c.Name)
+            .ProjectTo<ListCourseViewModel>(_mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 
     public async Task<DetailCourseViewModel?> GetByIdAsync(int id)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagementSystem.Models.Enums;
 using StudentManagementSystem.Models.ViewModels.Students;
 using StudentManagementSystem.Services.Interface;
 
@@ -11,10 +12,19 @@ public class StudentController : Controller
     {
         _studentService = studentService;
     }
-    public async Task<IActionResult> Index() 
+    public async Task<IActionResult> Index(string? searchTerm, StudentStatus? status)
     {
-        var students = await _studentService.GetAllAsync();
-        return View(students);
+        var students = await _studentService
+            .GetAllAsync(searchTerm, status);
+
+        var viewModel = new StudentIndexViewModel
+        {
+            Students = students,
+            SearchTerm = searchTerm,
+            Status = status
+        };
+
+        return View(viewModel);
     }
     [HttpGet]
     public IActionResult Create() 

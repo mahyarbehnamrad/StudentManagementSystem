@@ -1,10 +1,38 @@
-﻿@model List<StudentManagementSystem.Models.ViewModels.Grades.ListGradeViewModel>
-
+﻿@model StudentManagementSystem.Models.ViewModels.Grades.GradeIndexViewModel
 @{
     ViewData["Title"] = "Grades";
 }
 
 <div class="content-wide">
+    <form method="get"
+          asp-action="Index"
+          class="grade-filter">
+
+        <input asp-for="SearchTerm"
+               class="form-control"
+               placeholder="Search student..." />
+
+        <select asp-for="CourseId"
+                asp-items="Model.Courses"
+                class="form-select">
+
+            <option value="">
+                All Courses
+            </option>
+
+        </select>
+
+        <button type="submit"
+                class="btn btn-primary">
+            Search
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Clear
+        </a>
+
+    </form>
 <div class="table-card">
 <h2>Grades</h2>
 
@@ -25,7 +53,7 @@
     </thead>
 
     <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Grades)
                 {
                     var gradeClass = item.Percentage < 50
                     ? "grade-low"
