@@ -1,107 +1,251 @@
-﻿@{
-    ViewData["Title"] = "Home";
+﻿@model StudentManagementSystem.Models.ViewModels.Dashboard.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center mb-5">
-    <h1 class="display-4">Student Management System</h1>
-    <p class="text-muted">
-        Manage students, courses, enrollments and grades.
-    </p>
+<div class="dashboard-page">
+
+    <div class="dashboard-header">
+        <h2>Dashboard</h2>
+
+        <p>
+            Overview of the Student Management System
+        </p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <a asp-controller="Student"
+           asp-action="Index"
+           class="dashboard-card">
+
+            <div class="dashboard-card-title">
+                Students
+            </div>
+
+            <div class="dashboard-number">
+                @Model.StudentCount
+            </div>
+
+            <div class="dashboard-stat-label">
+                Total students
+            </div>
+
+            <div class="dashboard-link">
+                View Students →
+            </div>
+
+        </a>
+
+
+        <a asp-controller="Course"
+           asp-action="Index"
+           class="dashboard-card">
+
+            <div class="dashboard-card-title">
+                Courses
+            </div>
+
+            <div class="dashboard-number">
+                @Model.CourseCount
+            </div>
+
+            <div class="dashboard-stat-label">
+                Total courses
+            </div>
+
+            <div class="dashboard-link">
+                View Courses →
+            </div>
+
+        </a>
+
+
+        <a asp-controller="StudentCourse"
+           asp-action="Index"
+           class="dashboard-card">
+
+            <div class="dashboard-card-title">
+                Enrollments
+            </div>
+
+            <div class="dashboard-number">
+                @Model.EnrollmentCount
+            </div>
+
+            <div class="dashboard-stat-label">
+                Active enrollments
+            </div>
+
+            <div class="dashboard-link">
+                View Enrollments →
+            </div>
+
+        </a>
+
+
+        <a asp-controller="Grade"
+           asp-action="Index"
+           class="dashboard-card">
+
+            <div class="dashboard-card-title">
+                Grades
+            </div>
+
+            <div class="dashboard-number">
+                @Model.GradeCount
+            </div>
+
+            <div class="dashboard-stat-label">
+                Recorded grades
+            </div>
+
+            <div class="dashboard-link">
+                View Grades →
+            </div>
+
+        </a>
+
+        <div class="dashboard-charts">
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <h4>Student Status</h4>
+
+                    <p>
+                        Distribution of students by current status
+                    </p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="studentStatusChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+                <h4>Grade Performance</h4>
+
+                <p>
+                    Distribution of grades by percentage
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="gradePerformanceChart"></canvas>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
-<div class="row g-4">
+@section Scripts {
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Students -->
-    <div class="col-md-6">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
+    <script>
+        const studentStatusCanvas =
+            document.getElementById('studentStatusChart');
 
-                <h3 class="card-title">
-                    Students
-                </h3>
+        new Chart(studentStatusCanvas, {
+            type: 'doughnut',
 
-                <p class="card-text text-muted">
-                    Manage student information and status.
-                </p>
+            data: {
+                labels: [
+                    'Active',
+                    'Inactive',
+                    'Graduated'
+                ],
 
-                <a asp-controller="Student"
-                   asp-action="Index"
-                   class="btn btn-primary">
-                    Manage Students
-                </a>
+                datasets: [{
+                    data: [
+                        @Model.ActiveStudentCount,
+                        @Model.InactiveStudentCount,
+                        @Model.GraduatedStudentCount
+                    ],
 
-            </div>
-        </div>
-    </div>
+                    backgroundColor: [
+                        '#4f8f70',
+                        '#d77a7a',
+                        '#668bc4'
+                    ],
 
+                    borderWidth: 0
+                }]
+            },
 
-    <!-- Courses -->
-    <div class="col-md-6">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
 
-                <h3 class="card-title">
-                    Courses
-                </h3>
+                cutout: '68%',
 
-                <p class="card-text text-muted">
-                    Create and manage available courses.
-                </p>
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+                const gradePerformanceCanvas =
+            document.getElementById('gradePerformanceChart');
 
-                <a asp-controller="Course"
-                   asp-action="Index"
-                   class="btn btn-success">
-                    Manage Courses
-                </a>
+        new Chart(gradePerformanceCanvas, {
+            type: 'bar',
 
-            </div>
-        </div>
-    </div>
+            data: {
+                labels: [
+                    'Below 50%',
+                    '50% - 80%',
+                    '80%+'
+                ],
 
-    <!-- Enrollments -->
-    <div class="col-md-6">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
+                datasets: [{
+                    label: 'Grades',
 
-                <h3 class="card-title">
-                    Enrollments
-                </h3>
+                    data: [
+                        @Model.LowGradeCount,
+                        @Model.MediumGradeCount,
+                        @Model.HighGradeCount
+                    ],
 
-                <p class="card-text text-muted">
-                    Enroll students in courses and manage enrollments.
-                </p>
+                    backgroundColor: [
+                        '#d77a7a',
+                        '#d6a84b',
+                        '#4f8f70'
+                    ],
 
-                <a asp-controller="StudentCourse"
-                   asp-action="Index"
-                   class="btn btn-dark">
-                    Manage Enrollments
-                </a>
+                    borderRadius: 7
+                }]
+            },
 
-            </div>
-        </div>
-    </div>
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
 
-    <!-- Grades -->
-    <div class="col-md-6">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
 
-                <h3 class="card-title">
-                    Grades
-                </h3>
+                scales: {
+                    y: {
+                        beginAtZero: true,
 
-                <p class="card-text text-muted">
-                    Manage student grades and course results.
-                </p>
-
-                <a asp-controller="Grade"
-                   asp-action="Index"
-                   class="btn btn-warning">
-                    Manage Grades
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

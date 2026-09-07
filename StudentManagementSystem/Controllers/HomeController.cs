@@ -1,21 +1,25 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.Models;
 using StudentManagementSystem.Models.ViewModels;
+using StudentManagementSystem.Services.Interface;
 namespace StudentManagementSystem.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private readonly IDashboardService _dashboardService;
+    public HomeController(ILogger<HomeController> logger, IDashboardService dashboardService)
     {
         _logger = logger;
+        _dashboardService = dashboardService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var viewmodel = await _dashboardService.GetStatisticsAsync(); 
+        return View(viewmodel);
     }
 
     public IActionResult Privacy()

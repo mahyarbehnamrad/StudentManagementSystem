@@ -29,7 +29,7 @@
                 {
                     var gradeClass = item.Percentage < 50
                     ? "grade-low"
-                    : item.Percentage < 75
+                    : item.Percentage <= 80
                     ? "grade-medium"
                     : "grade-high";
 
@@ -46,7 +46,7 @@
                                     @item.Percentage.ToString("0.##")%
                                 </span>
                             }
-                            else if (item.Percentage < 75)
+                            else if (item.Percentage <= 80)
                             {
                                 <span class="badge grade-badge-medium">
                                     @item.Percentage.ToString("0.##")%

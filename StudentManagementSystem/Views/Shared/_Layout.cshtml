@@ -114,6 +114,7 @@
         </aside>
 
         <div class="main-content">
+
             @if (TempData["SuccessMessage"] != null)
             {
                 <div class="alert alert-success alert-dismissible fade show success-alert"
@@ -129,41 +130,33 @@
 
                 </div>
             }
-            <main role="main">
+
+            <main class="page-content" role="main">
                 @RenderBody()
             </main>
+
+            <footer class="app-footer">
+                <div>
+                    &copy; @DateTime.Now.Year - Student Management System
+                    |
+                    <a asp-controller="Home"
+                       asp-action="Privacy">
+                        Privacy
+                    </a>
+                </div>
+            </footer>
+
         </div>
 
     </div>
 
-
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script src="~/js/site.js"
-                asp-append-version="true">
-        </script>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - Student Management System
-            |
-            <a asp-controller="Home"
-               asp-action="Privacy">
-                Privacy
-            </a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
